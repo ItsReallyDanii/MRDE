@@ -26,3 +26,17 @@
 **Decision:** EXP001 uses five Oregon ASOS/METAR-network stations (AST, SLE, MFR, SXT, RDM) covering coastal, Willamette Valley, interior southern valley, mountain/pass, and high-desert terrain classes over a locked 90-day window (2024-06-01 through 2024-08-30, end-exclusive) with HRRR forecasts at 1h/3h/6h/12h lead times.
 **Reason:** Stations selected by metadata-only blind filter spanning four terrain/context classes across Oregon; no residuals, forecast errors, or mismatch behavior inspected. Satisfies Stage 1 exit criteria per `02_STAGE_GATE_PLAN.md` and `04_SCOPE_LOCK_AND_V0_DEFINITION.md`.
 **Impact:** `experiments/EXP001/PRE_RUN_PLAN.md` filed and logged; Stage 1 marked `PASSED`; Stage 2 unblocked.
+
+## D005 — Defer NLCD land-cover metadata in Stage 2
+
+**Date:** 2026-04-28T08:08:17Z UTC  
+**Decision:** NLCD land-cover metadata is deferred for EXP001 v0.  
+**Reason:** Official point-query endpoints are unavailable/unreliable and manual raster downloads are too much overhead.  
+**Impact:** No NLCD or land-cover SUPPORTED_PATTERN claim is allowed in EXP001 unless NLCD is later filled and logged. Stage 3, if approved, may only use elevation/terrain/station/lead-time metadata, not land_cover_group claims.
+
+## D005 — Defer NLCD land-cover metadata in Stage 2
+
+**Date:** 2026-04-28T08:08:32Z UTC  
+**Decision:** NLCD land-cover metadata is deferred for EXP001 v0.  
+**Reason:** Official point-query endpoints are unavailable/unreliable and manual raster downloads are too much overhead.  
+**Impact:** No NLCD or land-cover SUPPORTED_PATTERN claim is allowed in EXP001 unless NLCD is later filled and logged. Stage 3, if approved, may only use elevation/terrain/station/lead-time metadata, not land_cover_group claims.

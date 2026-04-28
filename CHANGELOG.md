@@ -126,3 +126,41 @@ Initial split control packet created from the MRDE canonical draft and external 
 
 v1.2 should only be created after the first v0 pre-run experiment plan is drafted or if an additional governance correction is required.
 
+
+## v2.2 — Stage 2 Data Pipeline Closeout
+
+**Date:** 2026-04-28T08:08:17Z UTC
+**Stage:** Stage 2 — Deterministic data pipeline
+**Status:** PASSED (with NLCD deferred)
+
+### Added
+- Station metadata freeze completed.
+- ASOS ingestion and QC completed.
+- HRRR extraction completed.
+- Elevation metadata completed via USGS EPQS online query.
+- NLCD land cover explicitly blocked and deferred (Decision D005).
+- SXT flagged for low ASOS completeness and elevation mismatch preserved.
+
+### Not changed
+- No residuals computed.
+- No ASOS-HRRR alignment performed.
+- No Stage 3 work started.
+
+## v2.2 — Stage 2 Data Pipeline Closeout
+
+**Date:** 2026-04-28T08:08:32Z UTC
+**Stage:** Stage 2 — Deterministic data pipeline
+**Status:** PASSED (with NLCD deferred)
+
+### Added
+- Station metadata freeze completed.
+- ASOS ingestion and QC completed.
+- HRRR extraction completed.
+- Elevation metadata completed via USGS EPQS online query.
+- NLCD land cover explicitly blocked and deferred (Decision D005).
+- SXT flagged for low ASOS completeness and elevation mismatch preserved.
+
+### Not changed
+- No residuals computed.
+- No ASOS-HRRR alignment performed.
+- No Stage 3 work started.
