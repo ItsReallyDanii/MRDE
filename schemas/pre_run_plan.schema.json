@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MRDE Pre-Run Experiment Plan",
+  "type": "object",
+  "required": [
+    "log_schema_version",
+    "entry_type",
+    "experiment_id",
+    "research_question",
+    "geographic_region",
+    "station_list",
+    "time_window",
+    "forecast_source",
+    "observation_source",
+    "lead_times",
+    "residual_definition",
+    "time_alignment_rule",
+    "spatial_alignment_rule",
+    "qc_policy",
+    "metrics",
+    "baselines",
+    "supported_thresholds",
+    "human_approval",
+    "max_ambiguous_iterations",
+    "primary_metric_and_threshold",
+    "station_selection_filter_criteria",
+    "residual_preinspection_attestation",
+    "strongest_baseline_id",
+    "allowed_metadata_groupings",
+    "train_validation_test_split",
+    "sensitivity_checks",
+    "proxy_risk_screening_criteria"
+  ],
+  "properties": {
+    "log_schema_version": {
+      "const": "1.1"
+    },
+    "entry_type": {
+      "const": "pre_run_experiment_plan"
+    },
+    "experiment_id": {
+      "type": "string"
+    },
+    "station_list": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 5
+    },
+    "residual_preinspection_attestation": {
+      "const": true
+    },
+    "train_validation_test_split": {
+      "description": "Must specify a temporal validation split, such as a held-out trailing window or declared time-block split. Random splits across time-correlated meteorological observations are prohibited for validation metrics or SUPPORTED_PATTERN eligibility."
+    },
+    "sensitivity_checks": {
+      "description": "Must include pre-declared v0 sensitivity checks, including time-alignment tolerance, leave-one-station-out or stronger small-N stability metric, baseline-comparison stability, time-of-day stratification, and season/month stratification unless infeasible and logged."
+    },
+    "proxy_risk_screening_criteria": {
+      "description": "Must include proxy-risk checks for station siting/airport microenvironment, grid-point-versus-station elevation mismatch, QC/model-cycle issues, and other data-artifact explanations before SUPPORTED_PATTERN eligibility."
+    }
+  },
+  "additionalProperties": true
+}

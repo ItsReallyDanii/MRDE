@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MRDE Claim Review",
+  "type": "object",
+  "required": [
+    "experiment_id",
+    "hypothesis_id",
+    "reviewer",
+    "decision",
+    "claim_tier_approved",
+    "statistical_integrity_confirmed"
+  ],
+  "properties": {
+    "claim_tier_approved": {
+      "enum": [
+        "SPECULATIVE",
+        "AMBIGUOUS",
+        "SUPPORTED_PATTERN",
+        "FAILED"
+      ]
+    },
+    "statistical_integrity_confirmed": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": true
+}

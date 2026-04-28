@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MRDE Append-Only Log Entry",
+  "type": "object",
+  "required": [
+    "log_schema_version",
+    "entry_type",
+    "experiment_id",
+    "created_at"
+  ],
+  "properties": {
+    "log_schema_version": {
+      "const": "1.1"
+    },
+    "entry_type": {
+      "enum": [
+        "pre_run_experiment_plan",
+        "data_ingestion",
+        "residual_computation",
+        "candidate_hypothesis",
+        "validation_result",
+        "sensitivity_check",
+        "claim_tier_assignment",
+        "human_review",
+        "stop_rule_triggered",
+        "failed_result_retest_request",
+        "scope_amendment",
+        "changelog_entry"
+      ]
+    },
+    "experiment_id": {
+      "type": "string"
+    },
+    "hypothesis_id": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}
