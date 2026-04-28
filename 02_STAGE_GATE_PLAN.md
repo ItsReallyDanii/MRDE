@@ -23,8 +23,8 @@ Use exactly one status per stage:
 | Stage 0 — Governance placement | `PASSED` | Control files, agent scaffold, templates, schemas, and baseline log entry exist; no residuals have been inspected. |
 | Stage 1 — Pre-run experiment plan | `PASSED` | `experiments/EXP001/PRE_RUN_PLAN.md` filled, human-approved, and logged as a valid `pre_run_experiment_plan` entry at 2026-04-28T05:44:17Z. |
 | Stage 2 — Deterministic data pipeline | `PASSED` | Stage 2 complete. Limitations: NLCD deferred; SXT flagged. |
-| Stage 3 — Residual table and baselines | `NOT_STARTED` | Blocked until Stage 2 passes. |
-| Stage 4 — Candidate pattern analysis | `NOT_STARTED` | Blocked until Stage 3 passes. |
+| Stage 3 — Residual table and baselines | `PASSED` | Residual table and baselines completed successfully on corrected valid_time splits. |
+| Stage 4 — Candidate pattern analysis | `NOT_STARTED` | Allowed with limitations. Best readiness: GO_WITH_CAUTION. |
 | Stage 5 — Validation | `NOT_STARTED` | Blocked until Stage 4 passes. |
 | Stage 6 — Human claim review | `NOT_STARTED` | Blocked until Stage 5 produces a reviewable claim-tier recommendation. |
 | Stage 7 — Final research artifact | `NOT_STARTED` | Blocked until Stage 6 is complete. |

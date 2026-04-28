@@ -1,0 +1,93 @@
+{
+  "stage": "Phase_3_Baselines",
+  "metrics_by_split": {
+    "train": {
+      "raw_hrrr_forecast": {
+        "mae": 1.496,
+        "rmse": 1.853,
+        "bias": -0.504,
+        "n": 24740
+      },
+      "persistence_baseline": {
+        "mae": 5.016,
+        "rmse": 7.069,
+        "bias": -0.001,
+        "n": 24418
+      },
+      "station_wise_mean_bias_baseline": {
+        "mae": 1.22,
+        "rmse": 1.597,
+        "bias": -0.0,
+        "n": 24740
+      },
+      "lead_time_time_of_day_station_bias_baseline": {
+        "mae": 0.948,
+        "rmse": 1.275,
+        "bias": -0.0,
+        "n": 24740
+      }
+    },
+    "validation": {
+      "raw_hrrr_forecast": {
+        "mae": 1.326,
+        "rmse": 1.627,
+        "bias": -0.494,
+        "n": 5552
+      },
+      "persistence_baseline": {
+        "mae": 4.912,
+        "rmse": 6.92,
+        "bias": -0.038,
+        "n": 5471
+      },
+      "station_wise_mean_bias_baseline": {
+        "mae": 1.143,
+        "rmse": 1.47,
+        "bias": 0.105,
+        "n": 5552
+      },
+      "lead_time_time_of_day_station_bias_baseline": {
+        "mae": 0.922,
+        "rmse": 1.263,
+        "bias": 0.105,
+        "n": 5552
+      }
+    },
+    "test": {
+      "raw_hrrr_forecast": {
+        "mae": 1.266,
+        "rmse": 1.571,
+        "bias": -0.574,
+        "n": 5736
+      },
+      "persistence_baseline": {
+        "mae": 4.341,
+        "rmse": 6.128,
+        "bias": -0.041,
+        "n": 5718
+      },
+      "station_wise_mean_bias_baseline": {
+        "mae": 1.084,
+        "rmse": 1.411,
+        "bias": 0.052,
+        "n": 5736
+      },
+      "lead_time_time_of_day_station_bias_baseline": {
+        "mae": 1.033,
+        "rmse": 1.416,
+        "bias": 0.055,
+        "n": 5736
+      }
+    }
+  },
+  "trained_biases": {
+    "station_biases": {
+      "AST": -1.1419174553102007,
+      "SLE": -1.392775392670153,
+      "MFR": 0.35306506488951234,
+      "SXT": 1.0118494680851045,
+      "RDM": -0.32918891995805744
+    },
+    "lts_biases_count": 480
+  }
+}

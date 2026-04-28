@@ -1,5 +1,23 @@
 # Changelog
 
+
+## v1.3 — EXP001 Stage 3 PASSED and Stage 4 GO_WITH_CAUTION
+
+**Date:** 2026-04-28T08:30:00Z UTC
+**Stage:** Stage 3 — Residual table and baselines
+**Status:** PASSED
+
+### Added
+- Corrected Stage 3 alignment pipeline to enforce strict valid_time boundaries.
+- Assigned temporal_splits correctly and calculated bias baselines exclusively on the train split.
+- Stage 3 marked PASSED, with Stage 4 set to GO_WITH_CAUTION.
+- Explicit Stage 4 limitations remain: NLCD deferral and SXT proxy-risk flag.
+
+### Not changed
+- No p-values or hypothesis tests computed.
+- No claim tiers created.
+- No land-cover metadata populated.
+
 ## v1.2 â€” EXP001 Pre-Run Experiment Plan Filed and Stage 1 PASSED
 
 **Date:** 2026-04-28T05:44:17Z UTC

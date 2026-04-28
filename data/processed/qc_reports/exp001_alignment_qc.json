@@ -1,0 +1,41 @@
+{
+  "stage": "Phase_3_QC",
+  "total_forecast_rows_processed": 43090,
+  "total_matched": 36028,
+  "total_missing": 7062,
+  "temporal_splits": {
+    "train": 28690,
+    "validation": 7200,
+    "test": 7200,
+    "null_unknown_other": 0
+  },
+  "station_breakdown": {
+    "AST": {
+      "total": 8618,
+      "matched": 8570,
+      "missing": 48
+    },
+    "SLE": {
+      "total": 8618,
+      "matched": 8394,
+      "missing": 224
+    },
+    "MFR": {
+      "total": 8618,
+      "matched": 8582,
+      "missing": 36
+    },
+    "SXT": {
+      "total": 8618,
+      "matched": 1880,
+      "missing": 6738
+    },
+    "RDM": {
+      "total": 8618,
+      "matched": 8602,
+      "missing": 16
+    }
+  },
+  "sxt_proxy_risk_note": "SXT had 6738/8618 missing alignments. Station flagged.",
+  "pass_qc": true
+}

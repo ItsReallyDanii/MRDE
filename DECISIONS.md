@@ -40,3 +40,11 @@
 **Decision:** NLCD land-cover metadata is deferred for EXP001 v0.  
 **Reason:** Official point-query endpoints are unavailable/unreliable and manual raster downloads are too much overhead.  
 **Impact:** No NLCD or land-cover SUPPORTED_PATTERN claim is allowed in EXP001 unless NLCD is later filled and logged. Stage 3, if approved, may only use elevation/terrain/station/lead-time metadata, not land_cover_group claims.
+
+
+## D005 — Strict valid_time Boundary Enforcement and Stage 4 Readiness
+
+**Date:** 2026-04-28T08:30:00Z UTC
+**Decision:** Stage 3 residual generation was corrected to truncate records spanning outside the valid_time lock boundary. Stage 3 is marked PASSED and Stage 4 readiness is GO_WITH_CAUTION.
+**Reason:** 110 late cycle predictions breached the end-exclusive boundary logic. The pipeline was modified to drop out-of-boundary valid_times.
+**Impact:** Residual table finalized at 43,090 rows. Temporal splits strictly enforced for baseline training. Stage 4 begins cautiously due to NLCD deferral and SXT constraints.
