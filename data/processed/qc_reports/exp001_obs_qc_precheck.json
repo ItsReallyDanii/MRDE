@@ -1,0 +1,576 @@
+{
+  "log_schema_version": "1.1",
+  "entry_type": "qc_precheck_report",
+  "precheck_version": "2",
+  "completeness_method": "hourly_slot_coverage",
+  "experiment_id": "EXP001",
+  "stage": "Phase_2C",
+  "generated_at": "2026-04-28T06:25:28.968222+00:00",
+  "window_start": "2024-06-01T00:00:00Z",
+  "window_end_exclusive": "2024-08-30T00:00:00Z",
+  "expected_hourly_slots_per_station": 2160,
+  "slot_assignment_method": "nearest_hour_rounding: obs at HH:00-HH:29 → HH:00; HH:30-HH:59 → (HH+1):00",
+  "qc_rules": {
+    "temp_range_c": [
+      -60.0,
+      60.0
+    ],
+    "flatline_threshold_hours": 6,
+    "completeness_threshold": 0.9,
+    "imputation": "FORBIDDEN",
+    "completeness_cap": "100% (slot-based; cannot exceed 1 slot per hour)"
+  },
+  "stations": [
+    {
+      "station_id": "AST",
+      "total_expected_hourly_slots": 2160,
+      "raw_rows_in_window": 3268,
+      "raw_row_count_all": 3270,
+      "valid_obs_in_window": 3262,
+      "usable_hourly_slots": 2150,
+      "completeness_rate": 0.9954,
+      "pass_90pct_threshold": true,
+      "missing_temp_count": 6,
+      "malformed_count": 0,
+      "duplicate_timestamp_count": 2,
+      "impossible_temperature_count": 0,
+      "flatline_flag_count": 63,
+      "flatline_flags": [
+        {
+          "start": "2024-06-02T07:55:00+00:00",
+          "end": "2024-06-02T12:12:00+00:00",
+          "duration_hours": 15,
+          "tmp_c": 13.33
+        },
+        {
+          "start": "2024-06-02T19:40:00+00:00",
+          "end": "2024-06-02T21:22:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 13.89
+        },
+        {
+          "start": "2024-06-03T02:13:00+00:00",
+          "end": "2024-06-03T04:55:00+00:00",
+          "duration_hours": 12,
+          "tmp_c": 14.44
+        },
+        {
+          "start": "2024-06-04T01:55:00+00:00",
+          "end": "2024-06-04T07:55:00+00:00",
+          "duration_hours": 11,
+          "tmp_c": 12.22
+        },
+        {
+          "start": "2024-06-04T13:30:00+00:00",
+          "end": "2024-06-04T16:55:00+00:00",
+          "duration_hours": 8,
+          "tmp_c": 13.33
+        },
+        {
+          "start": "2024-06-04T19:55:00+00:00",
+          "end": "2024-06-05T00:55:00+00:00",
+          "duration_hours": 14,
+          "tmp_c": 13.89
+        },
+        {
+          "start": "2024-06-05T09:18:00+00:00",
+          "end": "2024-06-05T10:30:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 7.22
+        },
+        {
+          "start": "2024-06-09T11:55:00+00:00",
+          "end": "2024-06-09T15:55:00+00:00",
+          "duration_hours": 12,
+          "tmp_c": 13.33
+        },
+        {
+          "start": "2024-06-10T07:55:00+00:00",
+          "end": "2024-06-10T13:55:00+00:00",
+          "duration_hours": 7,
+          "tmp_c": 12.22
+        },
+        {
+          "start": "2024-06-15T04:55:00+00:00",
+          "end": "2024-06-15T09:55:00+00:00",
+          "duration_hours": 7,
+          "tmp_c": 11.67
+        },
+        {
+          "start": "2024-06-16T09:42:00+00:00",
+          "end": "2024-06-16T11:04:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 10.0
+        },
+        {
+          "start": "2024-06-17T09:55:00+00:00",
+          "end": "2024-06-17T12:55:00+00:00",
+          "duration_hours": 7,
+          "tmp_c": 12.22
+        },
+        {
+          "start": "2024-06-18T08:55:00+00:00",
+          "end": "2024-06-18T12:55:00+00:00",
+          "duration_hours": 7,
+          "tmp_c": 11.11
+        },
+        {
+          "start": "2024-06-23T03:55:00+00:00",
+          "end": "2024-06-23T07:30:00+00:00",
+          "duration_hours": 10,
+          "tmp_c": 13.89
+        },
+        {
+          "start": "2024-06-23T09:46:00+00:00",
+          "end": "2024-06-23T11:38:00+00:00",
+          "duration_hours": 8,
+          "tmp_c": 12.78
+        },
+        {
+          "start": "2024-06-24T14:55:00+00:00",
+          "end": "2024-06-24T16:02:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 15.0
+        },
+        {
+          "start": "2024-06-27T10:55:00+00:00",
+          "end": "2024-06-27T13:47:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 13.89
+        },
+        {
+          "start": "2024-06-27T14:55:00+00:00",
+          "end": "2024-06-27T16:36:00+00:00",
+          "duration_hours": 8,
+          "tmp_c": 13.89
+        },
+        {
+          "start": "2024-06-28T03:55:00+00:00",
+          "end": "2024-06-28T08:22:00+00:00",
+          "duration_hours": 10,
+          "tmp_c": 15.56
+        },
+        {
+          "start": "2024-06-30T04:55:00+00:00",
+          "end": "2024-06-30T07:15:00+00:00",
+          "duration_hours": 7,
+          "tmp_c": 16.11
+        },
+        {
+          "start": "2024-06-30T07:46:00+00:00",
+          "end": "2024-06-30T08:29:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 15.56
+        },
+        {
+          "start": "2024-06-30T08:54:00+00:00",
+          "end": "2024-06-30T12:55:00+00:00",
+          "duration_hours": 15,
+          "tmp_c": 15.56
+        },
+        {
+          "start": "2024-06-30T13:46:00+00:00",
+          "end": "2024-06-30T14:40:00+00:00",
+          "duration_hours": 7,
+          "tmp_c": 16.11
+        },
+        {
+          "start": "2024-07-01T06:55:00+00:00",
+          "end": "2024-07-01T12:03:00+00:00",
+          "duration_hours": 14,
+          "tmp_c": 15.56
+        },
+        {
+          "start": "2024-07-02T13:34:00+00:00",
+          "end": "2024-07-02T14:31:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 14.44
+        },
+        {
+          "start": "2024-07-04T04:41:00+00:00",
+          "end": "2024-07-04T10:42:00+00:00",
+          "duration_hours": 9,
+          "tmp_c": 13.33
+        },
+        {
+          "start": "2024-07-11T05:55:00+00:00",
+          "end": "2024-07-11T12:55:00+00:00",
+          "duration_hours": 9,
+          "tmp_c": 15.56
+        },
+        {
+          "start": "2024-07-13T07:55:00+00:00",
+          "end": "2024-07-13T13:55:00+00:00",
+          "duration_hours": 9,
+          "tmp_c": 13.33
+        },
+        {
+          "start": "2024-07-15T04:55:00+00:00",
+          "end": "2024-07-15T12:07:00+00:00",
+          "duration_hours": 15,
+          "tmp_c": 15.0
+        },
+        {
+          "start": "2024-07-16T04:55:00+00:00",
+          "end": "2024-07-16T08:55:00+00:00",
+          "duration_hours": 7,
+          "tmp_c": 14.44
+        },
+        {
+          "start": "2024-07-18T03:55:00+00:00",
+          "end": "2024-07-18T06:55:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 13.33
+        },
+        {
+          "start": "2024-07-18T07:55:00+00:00",
+          "end": "2024-07-18T13:27:00+00:00",
+          "duration_hours": 7,
+          "tmp_c": 13.33
+        },
+        {
+          "start": "2024-07-19T03:02:00+00:00",
+          "end": "2024-07-19T03:55:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 15.0
+        },
+        {
+          "start": "2024-07-19T10:55:00+00:00",
+          "end": "2024-07-19T11:47:00+00:00",
+          "duration_hours": 7,
+          "tmp_c": 14.44
+        },
+        {
+          "start": "2024-07-19T12:05:00+00:00",
+          "end": "2024-07-19T14:55:00+00:00",
+          "duration_hours": 7,
+          "tmp_c": 13.89
+        },
+        {
+          "start": "2024-07-20T08:55:00+00:00",
+          "end": "2024-07-20T11:46:00+00:00",
+          "duration_hours": 7,
+          "tmp_c": 14.44
+        },
+        {
+          "start": "2024-07-22T11:55:00+00:00",
+          "end": "2024-07-22T13:55:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 15.56
+        },
+        {
+          "start": "2024-07-23T08:30:00+00:00",
+          "end": "2024-07-23T09:40:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 15.0
+        },
+        {
+          "start": "2024-07-25T06:55:00+00:00",
+          "end": "2024-07-25T09:55:00+00:00",
+          "duration_hours": 9,
+          "tmp_c": 13.89
+        },
+        {
+          "start": "2024-07-29T15:29:00+00:00",
+          "end": "2024-07-29T16:46:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 17.22
+        },
+        {
+          "start": "2024-07-29T16:55:00+00:00",
+          "end": "2024-07-29T19:13:00+00:00",
+          "duration_hours": 9,
+          "tmp_c": 17.22
+        },
+        {
+          "start": "2024-07-29T19:32:00+00:00",
+          "end": "2024-07-29T20:31:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 17.22
+        },
+        {
+          "start": "2024-07-30T07:18:00+00:00",
+          "end": "2024-07-30T08:36:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 16.67
+        },
+        {
+          "start": "2024-08-02T06:24:00+00:00",
+          "end": "2024-08-02T09:55:00+00:00",
+          "duration_hours": 9,
+          "tmp_c": 17.22
+        },
+        {
+          "start": "2024-08-03T04:26:00+00:00",
+          "end": "2024-08-03T09:55:00+00:00",
+          "duration_hours": 9,
+          "tmp_c": 16.67
+        },
+        {
+          "start": "2024-08-03T10:55:00+00:00",
+          "end": "2024-08-03T13:55:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 16.11
+        },
+        {
+          "start": "2024-08-04T09:55:00+00:00",
+          "end": "2024-08-04T13:55:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 15.56
+        },
+        {
+          "start": "2024-08-08T07:55:00+00:00",
+          "end": "2024-08-08T09:55:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 15.56
+        },
+        {
+          "start": "2024-08-08T14:09:00+00:00",
+          "end": "2024-08-08T15:33:00+00:00",
+          "duration_hours": 9,
+          "tmp_c": 15.0
+        },
+        {
+          "start": "2024-08-09T02:34:00+00:00",
+          "end": "2024-08-09T03:43:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 15.0
+        },
+        {
+          "start": "2024-08-09T07:41:00+00:00",
+          "end": "2024-08-09T13:35:00+00:00",
+          "duration_hours": 14,
+          "tmp_c": 14.44
+        },
+        {
+          "start": "2024-08-10T07:55:00+00:00",
+          "end": "2024-08-10T13:55:00+00:00",
+          "duration_hours": 8,
+          "tmp_c": 16.67
+        },
+        {
+          "start": "2024-08-11T02:02:00+00:00",
+          "end": "2024-08-11T04:19:00+00:00",
+          "duration_hours": 10,
+          "tmp_c": 17.22
+        },
+        {
+          "start": "2024-08-11T08:38:00+00:00",
+          "end": "2024-08-11T11:18:00+00:00",
+          "duration_hours": 9,
+          "tmp_c": 16.11
+        },
+        {
+          "start": "2024-08-12T09:50:00+00:00",
+          "end": "2024-08-12T13:55:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 15.0
+        },
+        {
+          "start": "2024-08-15T04:55:00+00:00",
+          "end": "2024-08-15T14:55:00+00:00",
+          "duration_hours": 13,
+          "tmp_c": 17.22
+        },
+        {
+          "start": "2024-08-18T10:55:00+00:00",
+          "end": "2024-08-18T14:32:00+00:00",
+          "duration_hours": 14,
+          "tmp_c": 16.11
+        },
+        {
+          "start": "2024-08-20T03:55:00+00:00",
+          "end": "2024-08-20T06:55:00+00:00",
+          "duration_hours": 8,
+          "tmp_c": 17.78
+        },
+        {
+          "start": "2024-08-21T08:40:00+00:00",
+          "end": "2024-08-21T10:55:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 17.22
+        },
+        {
+          "start": "2024-08-22T10:20:00+00:00",
+          "end": "2024-08-22T15:05:00+00:00",
+          "duration_hours": 12,
+          "tmp_c": 15.0
+        },
+        {
+          "start": "2024-08-23T09:55:00+00:00",
+          "end": "2024-08-23T14:55:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 14.44
+        },
+        {
+          "start": "2024-08-24T21:55:00+00:00",
+          "end": "2024-08-25T01:55:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 18.33
+        },
+        {
+          "start": "2024-08-27T04:55:00+00:00",
+          "end": "2024-08-27T07:26:00+00:00",
+          "duration_hours": 11,
+          "tmp_c": 17.22
+        }
+      ],
+      "notes": "Passes 90% completeness threshold (2150/2160 slots = 99.5%).",
+      "overall_phase_2c_verdict": "GO"
+    },
+    {
+      "station_id": "SLE",
+      "total_expected_hourly_slots": 2160,
+      "raw_rows_in_window": 2223,
+      "raw_row_count_all": 2236,
+      "valid_obs_in_window": 2213,
+      "usable_hourly_slots": 2095,
+      "completeness_rate": 0.9699,
+      "pass_90pct_threshold": true,
+      "missing_temp_count": 10,
+      "malformed_count": 0,
+      "duplicate_timestamp_count": 13,
+      "impossible_temperature_count": 0,
+      "flatline_flag_count": 4,
+      "flatline_flags": [
+        {
+          "start": "2024-06-02T07:56:00+00:00",
+          "end": "2024-06-02T09:56:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 16.11
+        },
+        {
+          "start": "2024-06-02T10:56:00+00:00",
+          "end": "2024-06-02T13:56:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 15.56
+        },
+        {
+          "start": "2024-06-03T01:56:00+00:00",
+          "end": "2024-06-03T08:56:00+00:00",
+          "duration_hours": 14,
+          "tmp_c": 16.67
+        },
+        {
+          "start": "2024-08-19T09:56:00+00:00",
+          "end": "2024-08-19T14:56:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 17.22
+        }
+      ],
+      "notes": "Passes 90% completeness threshold (2095/2160 slots = 97.0%).",
+      "overall_phase_2c_verdict": "GO"
+    },
+    {
+      "station_id": "MFR",
+      "total_expected_hourly_slots": 2160,
+      "raw_rows_in_window": 2244,
+      "raw_row_count_all": 2244,
+      "valid_obs_in_window": 2236,
+      "usable_hourly_slots": 2150,
+      "completeness_rate": 0.9954,
+      "pass_90pct_threshold": true,
+      "missing_temp_count": 8,
+      "malformed_count": 0,
+      "duplicate_timestamp_count": 0,
+      "impossible_temperature_count": 0,
+      "flatline_flag_count": 5,
+      "flatline_flags": [
+        {
+          "start": "2024-06-02T22:53:00+00:00",
+          "end": "2024-06-03T03:53:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 18.33
+        },
+        {
+          "start": "2024-06-03T10:53:00+00:00",
+          "end": "2024-06-03T12:53:00+00:00",
+          "duration_hours": 8,
+          "tmp_c": 15.0
+        },
+        {
+          "start": "2024-08-18T11:53:00+00:00",
+          "end": "2024-08-18T14:53:00+00:00",
+          "duration_hours": 8,
+          "tmp_c": 14.44
+        },
+        {
+          "start": "2024-08-24T04:53:00+00:00",
+          "end": "2024-08-24T10:03:00+00:00",
+          "duration_hours": 8,
+          "tmp_c": 12.78
+        },
+        {
+          "start": "2024-08-24T12:53:00+00:00",
+          "end": "2024-08-24T14:59:00+00:00",
+          "duration_hours": 7,
+          "tmp_c": 11.67
+        }
+      ],
+      "notes": "Passes 90% completeness threshold (2150/2160 slots = 99.5%).",
+      "overall_phase_2c_verdict": "GO"
+    },
+    {
+      "station_id": "SXT",
+      "total_expected_hourly_slots": 2160,
+      "raw_rows_in_window": 555,
+      "raw_row_count_all": 555,
+      "valid_obs_in_window": 555,
+      "usable_hourly_slots": 475,
+      "completeness_rate": 0.2199,
+      "pass_90pct_threshold": false,
+      "missing_temp_count": 0,
+      "malformed_count": 0,
+      "duplicate_timestamp_count": 0,
+      "impossible_temperature_count": 0,
+      "flatline_flag_count": 4,
+      "flatline_flags": [
+        {
+          "start": "2024-06-03T04:15:00+00:00",
+          "end": "2024-06-03T06:56:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 10.0
+        },
+        {
+          "start": "2024-06-03T07:47:00+00:00",
+          "end": "2024-06-03T09:56:00+00:00",
+          "duration_hours": 6,
+          "tmp_c": 9.44
+        },
+        {
+          "start": "2024-06-03T10:06:00+00:00",
+          "end": "2024-06-03T12:04:00+00:00",
+          "duration_hours": 7,
+          "tmp_c": 8.89
+        },
+        {
+          "start": "2024-06-03T13:40:00+00:00",
+          "end": "2024-06-03T14:43:00+00:00",
+          "duration_hours": 8,
+          "tmp_c": 7.78
+        }
+      ],
+      "notes": "Below 90% threshold (475/2160 slots = 22.0%). Human review required before Stage 3 eligibility. SXT mountain-pass non-airport ASOS: low observation volume expected. Proxy-risk flag remains active per exp001_stations.yaml. Operator must decide GO/NO-GO for SXT before Stage 3.",
+      "overall_phase_2c_verdict": "GO_WITH_CAUTION"
+    },
+    {
+      "station_id": "RDM",
+      "total_expected_hourly_slots": 2160,
+      "raw_rows_in_window": 2226,
+      "raw_row_count_all": 2226,
+      "valid_obs_in_window": 2225,
+      "usable_hourly_slots": 2155,
+      "completeness_rate": 0.9977,
+      "pass_90pct_threshold": true,
+      "missing_temp_count": 1,
+      "malformed_count": 0,
+      "duplicate_timestamp_count": 0,
+      "impossible_temperature_count": 0,
+      "flatline_flag_count": 0,
+      "flatline_flags": [],
+      "notes": "Passes 90% completeness threshold (2155/2160 slots = 99.8%).",
+      "overall_phase_2c_verdict": "GO"
+    }
+  ],
+  "overall_phase_2c_verdict": "GO_WITH_CAUTION"
+}
