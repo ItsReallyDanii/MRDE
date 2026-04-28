@@ -21,8 +21,8 @@ Use exactly one status per stage:
 | Stage | Status | Meaning |
 |---|---|---|
 | Stage 0 — Governance placement | `PASSED` | Control files, agent scaffold, templates, schemas, and baseline log entry exist; no residuals have been inspected. |
-| Stage 1 — Pre-run experiment plan | `IN_PROGRESS` | Template exists, but Stage 1 is not complete until `experiments/EXP001/PRE_RUN_PLAN.md` is filled, human-approved, and logged as a valid `pre_run_experiment_plan`. |
-| Stage 2 — Deterministic data pipeline | `NOT_STARTED` | Blocked until Stage 1 passes. |
+| Stage 1 — Pre-run experiment plan | `PASSED` | `experiments/EXP001/PRE_RUN_PLAN.md` filled, human-approved, and logged as a valid `pre_run_experiment_plan` entry at 2026-04-28T05:44:17Z. |
+| Stage 2 — Deterministic data pipeline | `NOT_STARTED` | Stage 1 passed; Stage 2 may begin when operator is ready. |
 | Stage 3 — Residual table and baselines | `NOT_STARTED` | Blocked until Stage 2 passes. |
 | Stage 4 — Candidate pattern analysis | `NOT_STARTED` | Blocked until Stage 3 passes. |
 | Stage 5 — Validation | `NOT_STARTED` | Blocked until Stage 4 passes. |

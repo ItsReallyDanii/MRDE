@@ -1,5 +1,26 @@
 # Changelog
 
+## v1.2 — EXP001 Pre-Run Experiment Plan Filed and Stage 1 PASSED
+
+**Date:** 2026-04-28T05:44:17Z UTC
+**Stage:** Stage 1 — Pre-run experiment plan
+**Status:** PASSED
+
+### Added
+
+- Filed and human-approved `experiments/EXP001/PRE_RUN_PLAN.md`: five-station Oregon multi-terrain transect (AST, SLE, MFR, SXT, RDM), 90-day summer 2024 window, HRRR/ASOS sources, four lead times, temporal train/validation/test split, full baselines, thresholds, sensitivity checks, and proxy-risk criteria. All fields filled before any residual inspection.
+- Appended `pre_run_experiment_plan` JSONL entry to `logs/append_only_log.jsonl` (entry 4).
+- Updated `02_STAGE_GATE_PLAN.md` Stage 1 status from `IN_PROGRESS` to `PASSED`; Stage 2 unblocked.
+- Added D004 to `DECISIONS.md`.
+
+### Not changed
+
+- No data pipeline code added.
+- No residuals inspected.
+- No validation claims created.
+- No correction-claim lane created.
+- No station selected based on residual behavior.
+
 ## v2.1 — Second-Pass Audit Cleanup
 
 Applied targeted cleanup from the second-pass audit report.
