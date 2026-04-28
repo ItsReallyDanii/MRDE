@@ -1,0 +1,171 @@
+# MRDE EXP001 — Frozen Station Metadata
+# Phase 2B: Station Metadata Freeze
+# Generated: 2026-04-28T06:12:00Z
+# Operator: Daniel Sleiman
+#
+# AUTHORITY: experiments/EXP001/PRE_RUN_PLAN.md (locked)
+# COORDINATES: IEM ASOS OR_ASOS network (accessed 2026-04-28T06:10:04Z)
+#              https://mesonet.agron.iastate.edu/sites/networks.php?network=OR_ASOS&format=csv&nohtml=on
+#
+# RULE: Do not change station_id, terrain_class, or network without operator approval
+#       and a pre_run_plan amendment logged in append_only_log.jsonl.
+# RULE: All coordinates are IEM-authoritative. Where EXP001 plan values differed,
+#       IEM values are used; discrepancies are recorded in discrepancy_notes.
+# RULE: No station may be added or removed from this file without Stage 1 plan amendment.
+
+schema_version: "1.0"
+freeze_date: "2026-04-28T06:12:00Z"
+operator: "Daniel Sleiman"
+metadata_source_primary: "IEM OR_ASOS network"
+metadata_source_url: "https://mesonet.agron.iastate.edu/sites/networks.php?network=OR_ASOS&format=csv&nohtml=on"
+metadata_source_access_date: "2026-04-28T06:10:04Z"
+exp001_plan_file: "experiments/EXP001/PRE_RUN_PLAN.md"
+
+stations:
+  - station_id: "AST"
+    station_name: "Astoria Regional Airport / Clatsop County"
+    icao: "KAST"
+    network: "OR_ASOS"
+    latitude: 46.1569
+    longitude: -123.8825
+    elevation_m: 7
+    terrain_class: "coastal_low_elevation"
+    iem_begin_date: "1949-04-01"
+    iem_end_date: null  # active
+    verification_status: "VERIFIED"
+    metadata_source: "IEM OR_ASOS"
+    discrepancy_notes: >
+      EXP001 pre-run plan recorded lat=46.1580, lon=-123.8787, elev=8m.
+      IEM authoritative values: lat=46.1569, lon=-123.8825, elev=7m.
+      Delta: lat=0.0011 deg (within 0.01 deg tolerance), lon=0.0038 deg (within tolerance),
+      elev=1m (within 10m tolerance). No material impact on grid-point selection.
+      IEM values used as authoritative for station freeze.
+    hrrr_elevation_mismatch_flag: false
+    asos_completeness_check_required: false
+    proxy_risk_notes: >
+      Airport ASOS collocated with Astoria Regional Airport. Coastal exposure:
+      marine-layer and sea-breeze effects documented as proxy-risk per EXP001 plan.
+      Must be documented in proxy-risk review before SUPPORTED_PATTERN claim.
+
+  - station_id: "SLE"
+    station_name: "Salem / McNary Field"
+    icao: "KSLE"
+    network: "OR_ASOS"
+    latitude: 44.9095
+    longitude: -123.0025
+    elevation_m: 61
+    terrain_class: "willamette_valley"
+    iem_begin_date: "1928-06-25"
+    iem_end_date: null  # active
+    verification_status: "VERIFIED"
+    metadata_source: "IEM OR_ASOS"
+    discrepancy_notes: >
+      EXP001 pre-run plan recorded lat=44.9095, lon=-123.0029, elev=61m.
+      IEM authoritative values: lat=44.9095, lon=-123.0025, elev=61m.
+      Delta: lat=0.0000 deg (exact match), lon=0.0004 deg (within tolerance),
+      elev=0m (exact match). No material impact on grid-point selection.
+      IEM values used as authoritative for station freeze.
+    hrrr_elevation_mismatch_flag: false
+    asos_completeness_check_required: false
+    proxy_risk_notes: >
+      Airport ASOS collocated with McNary Field. Willamette Valley interior:
+      airport microenvironment effects documented as proxy-risk per EXP001 plan.
+
+  - station_id: "MFR"
+    station_name: "Rogue Valley International / Medford / Jackson County"
+    icao: "KMFR"
+    network: "OR_ASOS"
+    latitude: 42.3811
+    longitude: -122.8722
+    elevation_m: 405
+    terrain_class: "interior_southern_valley"
+    iem_begin_date: "1911-08-01"
+    iem_end_date: null  # active
+    verification_status: "VERIFIED_WITH_NOTE"
+    metadata_source: "IEM OR_ASOS"
+    discrepancy_notes: >
+      EXP001 pre-run plan recorded lat=42.3742, lon=-122.8735, elev=405m.
+      IEM authoritative values: lat=42.3811, lon=-122.8722, elev=405m.
+      Delta: lat=0.0069 deg (within 0.01 deg tolerance), lon=0.0013 deg (within tolerance),
+      elev=0m (exact match). The latitude delta of 0.0069 deg is the largest discrepancy
+      across all five stations but remains within the 0.01 deg tolerance threshold.
+      IEM values used as authoritative for station freeze. Frozen coordinates must be
+      used for HRRR grid-point selection; EXP001 plan coordinates must not be used.
+    hrrr_elevation_mismatch_flag: false
+    asos_completeness_check_required: false
+    proxy_risk_notes: >
+      Airport ASOS collocated with Rogue Valley International Airport. Interior
+      southern valley: airport microenvironment and thermal-valley effects documented
+      as proxy-risk per EXP001 plan.
+
+  - station_id: "SXT"
+    station_name: "Sexton Summit ASOS"
+    icao: "KSXT"
+    network: "OR_ASOS"
+    latitude: 42.6003
+    longitude: -123.3642
+    elevation_m: 1171
+    terrain_class: "mountain_pass"
+    iem_begin_date: "1948-01-01"
+    iem_end_date: null  # active
+    verification_status: "VERIFIED_WITH_CAUTION"
+    metadata_source: "IEM OR_ASOS; cross-checked with AOPA, weather.gov, iflightplanner.com"
+    discrepancy_notes: >
+      EXP001 pre-run plan recorded lat=42.6106, lon=-123.3692, elev=1175m.
+      IEM authoritative values: lat=42.6003, lon=-123.3642, elev=1171m.
+      Independent cross-check (AOPA, weather.gov, iflightplanner.com) confirms:
+      lat~42.600 deg, lon~123.366 deg W, elev~3842 ft (1171 m).
+      Delta from plan: lat=0.0103 deg (marginally exceeds 0.01 deg threshold),
+      lon=0.0050 deg (within tolerance), elev=4m (within 10m tolerance).
+      IEM values used as authoritative for station freeze.
+      Latitude delta of 0.0103 deg is a CAUTION but does not block pipeline;
+      the change affects HRRR nearest-grid-point selection and must be noted
+      in the provenance manifest. At HRRR 3-km resolution, 0.010 deg ~1.1 km
+      — may shift the selected grid cell. HRRR grid-to-station elevation mismatch
+      must be computed and reviewed before any SUPPORTED_PATTERN claim.
+    hrrr_elevation_mismatch_flag: true
+    hrrr_elevation_mismatch_note: >
+      SXT is at 1171m on a mountain pass. HRRR 3-km terrain smoothing typically
+      underrepresents sharp pass elevations. Absolute elevation mismatch between
+      HRRR grid terrain height and 1171m station elevation is expected to exceed
+      50m, triggering the proxy-risk flag defined in EXP001 pre-run plan.
+      Mismatch must be computed and logged in Phase 2E before any claim eligibility
+      decision for the mountain_pass group.
+    asos_completeness_check_required: true
+    asos_completeness_note: >
+      SXT is a non-airport mountain-pass ASOS. Observation volume and QC rates
+      for summer 2024 are unconfirmed. Phase 2C must verify >=90% usable hourly
+      observations over the full window before SXT is eligible for SUPPORTED_PATTERN
+      claims. If completeness falls below 90%, SXT must be flagged and operator
+      review is required before Stage 3.
+    proxy_risk_notes: >
+      High-risk station for multiple proxy-risk categories per EXP001 plan:
+      (1) HRRR grid-to-station elevation mismatch >50m expected — flag required.
+      (2) Mountain/pass representativeness: SXT at a highway pass may not represent
+          broad Cascades terrain; must be documented in proxy-risk review.
+      (3) SRTM void risk: steep terrain at 1171m — SRTM tile coverage at
+          (42.6003, -123.3642) must be verified in Phase 2E; NED 3DEP as fallback.
+
+  - station_id: "RDM"
+    station_name: "Roberts Field / Redmond"
+    icao: "KRDM"
+    network: "OR_ASOS"
+    latitude: 44.2539
+    longitude: -121.1500
+    elevation_m: 938
+    terrain_class: "central_high_desert"
+    iem_begin_date: "1942-01-01"
+    iem_end_date: null  # active
+    verification_status: "VERIFIED"
+    metadata_source: "IEM OR_ASOS"
+    discrepancy_notes: >
+      EXP001 pre-run plan recorded lat=44.2541, lon=-121.1500, elev=938m.
+      IEM authoritative values: lat=44.2539, lon=-121.1500, elev=938m.
+      Delta: lat=0.0002 deg (within tolerance), lon=0.0000 deg (exact match),
+      elev=0m (exact match). No material impact on grid-point selection.
+      IEM values used as authoritative for station freeze.
+    hrrr_elevation_mismatch_flag: false
+    asos_completeness_check_required: false
+    proxy_risk_notes: >
+      Airport ASOS collocated with Roberts Field. High-desert terrain:
+      airport microenvironment effects documented as proxy-risk per EXP001 plan.

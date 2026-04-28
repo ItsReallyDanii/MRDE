@@ -1,0 +1,41 @@
+# MRDE EXP001 — Pipeline Requirements
+# Stage 2: Deterministic Data Ingestion and Metadata Processing
+# Do not add ML, modeling, optimization, or analysis libraries here.
+# This file covers ingestion, provenance, QC, and terrain/land-cover metadata only.
+
+# ── HRRR grib2 ingestion ──────────────────────────────────────────────────────
+# NOTE (OS-level): cfgrib requires the 'eccodes' C library.
+#   Linux/macOS: install via system package manager (e.g., apt-get install libeccodes-dev)
+#   Windows:     conda install -c conda-forge eccodes cfgrib
+#                or use WSL with apt-get. Pure pip install is unreliable on Windows.
+herbie-data>=2024.2.0,<2025.0.0   # HRRR archive access via AWS, GCS, or NOMADS
+cfgrib>=0.9.14,<0.10.0             # grib2 → xarray decoding (requires eccodes C library)
+xarray>=2024.1.0,<2025.0.0         # N-dimensional array handling for grib output
+eccodes>=2.35.0,<3.0.0             # Python bindings for eccodes (may still need C library)
+
+# ── Spatial / raster operations ───────────────────────────────────────────────
+rasterio>=1.3.10,<2.0.0            # SRTM/NED elevation and NLCD raster sampling
+numpy>=1.26.0,<2.1.0               # array operations for grid-point selection
+scipy>=1.13.0,<2.0.0               # haversine / spatial utilities if needed
+
+# ── ASOS observation download ─────────────────────────────────────────────────
+requests>=2.31.0,<3.0.0            # HTTP download for IEM ASOS API
+urllib3>=2.0.0,<3.0.0              # requests dependency — pin for compatibility
+
+# ── Data handling ─────────────────────────────────────────────────────────────
+pandas>=2.2.0,<3.0.0               # tabular data for observations and manifests
+pyarrow>=15.0.0,<18.0.0            # parquet support if needed for large manifests
+
+# ── Provenance and hashing ────────────────────────────────────────────────────
+# hashlib is stdlib — no install needed
+# json / jsonlines writing uses stdlib json — no install needed
+jsonschema>=4.22.0,<5.0.0          # optional: validate provenance manifest entries
+
+# ── YAML config handling ──────────────────────────────────────────────────────
+pyyaml>=6.0.1,<7.0.0               # read/write pipeline/config/*.yaml
+
+# ── Date/time utilities ───────────────────────────────────────────────────────
+# datetime and zoneinfo are stdlib (Python >= 3.9) — no install needed
+
+# ── Testing ───────────────────────────────────────────────────────────────────
+pytest>=8.1.0,<9.0.0               # test suite runner
