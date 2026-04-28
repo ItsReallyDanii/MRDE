@@ -6,13 +6,14 @@ Driver script that assembles station_metadata/exp001_terrain_landcover.json
 by combining:
   - Station coordinates from pipeline/config/exp001_stations.yaml
   - HRRR grid coordinates from data/processed/manifests/hrrr_extraction_manifest.jsonl
-  - Elevation from a local DEM GeoTIFF (via --elevation-raster)
-  - NLCD 2021 class from a local NLCD GeoTIFF (via --nlcd-raster)
+  - Elevation from local DEM or online USGS EPQS
+  - NLCD 2021 class from local NLCD (Online is BLOCKED)
 
 Modes:
-  --dry-run               Validate inputs, print plan, print schema. No output written.
-  --elevation-raster PATH Elevation raster (required for real run).
-  --nlcd-raster PATH      NLCD 2021 raster (required for real run).
+  --dry-run               Validate inputs, print plan.
+  --online                Use USGS EPQS for elevation. (NLCD will block).
+  --elevation-raster PATH Elevation raster.
+  --nlcd-raster PATH      NLCD 2021 raster.
   --output PATH           Override default output path.
 
 FORBIDDEN: no raster downloads, no residuals, no ASOS-HRRR alignment.
@@ -22,11 +23,12 @@ import json
 import os
 import sys
 from datetime import datetime, timezone
+import urllib.error
 
 import yaml
 
 # ---------------------------------------------------------------------------
-# Sibling module imports (no package install required)
+# Sibling module imports
 # ---------------------------------------------------------------------------
 _SRC_DIR = os.path.normpath(os.path.join(os.path.dirname(__file__), ".."))
 if _SRC_DIR not in sys.path:
@@ -50,7 +52,6 @@ DEFAULT_OUTPUT = os.path.join(
     _REPO, "data", "processed", "station_metadata", "exp001_terrain_landcover.json"
 )
 
-# SXT-specific proxy risk flag (ASCII-only)
 SXT_RISK_NOTE = (
     "SXT (Sexton Summit) is a non-airport mountain-summit ASOS at ~1171m. "
     "Phase 2C completeness was 22.0% (475/2160 hourly slots). "
@@ -73,7 +74,6 @@ def load_stations() -> dict:
 
 
 def load_hrrr_grids() -> dict:
-    """Return {station_id: {grid_lat, grid_lon}} from first occurrence in manifest."""
     if not os.path.exists(HRRR_MANIFEST):
         print(f"ERROR: HRRR manifest not found: {HRRR_MANIFEST}", file=sys.stderr)
         sys.exit(1)
@@ -124,45 +124,7 @@ def run_dry_run(stations: dict, hrrr_grids: dict) -> None:
             f"grid=({g_lat}, {g_lon}){offset}{risk}"
         )
 
-    print()
-    print("[DRY RUN] Planned output schema:")
-    schema = {
-        "metadata_version": "1.0",
-        "experiment_id": "EXP001",
-        "generated_at": "<ISO8601_TIMESTAMP>",
-        "caveats": [NLCD_STATIC_YEAR_CAVEAT],
-        "stations": [
-            {
-                "station_id": "<e.g. AST>",
-                "terrain_class": "<from exp001_stations.yaml>",
-                "station_lat": 0.0,
-                "station_lon": 0.0,
-                "station_elevation_m_config": "<from yaml>",
-                "hrrr_grid_lat": 0.0,
-                "hrrr_grid_lon": 0.0,
-                "station_elevation_m_dem": "<sampled from DEM>",
-                "hrrr_grid_elevation_m_dem": "<sampled from DEM>",
-                "elevation_mismatch_m": "<|station_elev - grid_elev|>",
-                "elevation_mismatch_gt_50m": "<bool>",
-                "station_nlcd_2021_code": "<int>",
-                "station_nlcd_2021_label": "<str>",
-                "hrrr_grid_nlcd_2021_code": "<int>",
-                "hrrr_grid_nlcd_2021_label": "<str>",
-                "proxy_risk_note": "<SXT only, else null>",
-                "elevation_source_path": "<raster path>",
-                "nlcd_source_path": "<raster path>",
-                "access_date": "<ISO8601>",
-            }
-        ],
-    }
-    print(json.dumps(schema, indent=2))
-    print()
-    print("[DRY RUN] No output written. To run real extraction:")
-    print(
-        "  python pipeline/src/metadata/build_terrain_landcover.py \\\n"
-        "    --elevation-raster /path/to/dem.tif \\\n"
-        "    --nlcd-raster /path/to/nlcd2021.tif"
-    )
+    print("\n[DRY RUN] No output written.")
 
 
 # ---------------------------------------------------------------------------
@@ -173,36 +135,29 @@ def run_extraction(
     hrrr_grids: dict,
     elevation_raster: str,
     nlcd_raster: str,
+    online: bool,
     output_path: str,
 ) -> None:
-    # Validate raster paths up front -- fail cleanly with instructions
-    missing = []
-    if not os.path.exists(elevation_raster):
-        missing.append(
-            f"  Elevation raster not found: {elevation_raster}\n"
-            "  -> Download SRTM 1-arc-sec or USGS 3DEP from:\n"
-            "      https://earthexplorer.usgs.gov/\n"
-            "      https://apps.nationalmap.gov/downloader/"
-        )
-    if not os.path.exists(nlcd_raster):
-        missing.append(
-            f"  NLCD raster not found: {nlcd_raster}\n"
-            "  -> Download NLCD 2021 Land Cover from:\n"
-            "      https://www.mrlc.gov/data"
-        )
-    if missing:
-        print("ERROR: Required raster files are missing:\n", file=sys.stderr)
-        for m in missing:
-            print(m, file=sys.stderr)
-        sys.exit(2)
+
+    if not online:
+        missing = []
+        if not elevation_raster or not os.path.exists(elevation_raster):
+            missing.append(f"  Elevation raster not found: {elevation_raster}")
+        if not nlcd_raster or not os.path.exists(nlcd_raster):
+            missing.append(f"  NLCD raster not found: {nlcd_raster}")
+        if missing:
+            print("ERROR: Missing rasters in local mode:\n", file=sys.stderr)
+            for m in missing:
+                print(m, file=sys.stderr)
+            sys.exit(2)
 
     results = []
     generated_at = datetime.now(timezone.utc).isoformat()
+    nlcd_blocked = False
 
     for sid, scfg in stations.items():
         grid = hrrr_grids.get(sid, {})
         if not grid:
-            print(f"  WARNING: {sid} has no HRRR grid entry in manifest -- skipping.")
             continue
 
         s_lat = scfg["latitude"]
@@ -211,14 +166,13 @@ def run_extraction(
         g_lon = grid["grid_lon"]
 
         print(f"  {sid}: sampling elevation at station ({s_lat}, {s_lon})...", end=" ", flush=True)
-        s_elev = sample_elevation(s_lat, s_lon, elevation_raster)
+        s_elev = sample_elevation(s_lat, s_lon, raster_path=elevation_raster, online=online)
         print(f"-> {s_elev.get('elevation_m')} m", end="  ")
 
         print(f"grid ({g_lat}, {g_lon})...", end=" ", flush=True)
-        g_elev = sample_elevation(g_lat, g_lon, elevation_raster)
+        g_elev = sample_elevation(g_lat, g_lon, raster_path=elevation_raster, online=online)
         print(f"-> {g_elev.get('elevation_m')} m")
 
-        # Elevation mismatch
         elev_mismatch = None
         elev_mismatch_gt50 = None
         if s_elev["elevation_m"] is not None and g_elev["elevation_m"] is not None:
@@ -226,12 +180,19 @@ def run_extraction(
             elev_mismatch_gt50 = elev_mismatch > 50.0
 
         print(f"  {sid}: sampling NLCD at station...", end=" ", flush=True)
-        s_nlcd = sample_nlcd_class(s_lat, s_lon, nlcd_raster)
-        print(f"-> {s_nlcd.get('class_code')} ({s_nlcd.get('class_label')})", end="  ")
+        s_nlcd = sample_nlcd_class(s_lat, s_lon, raster_path=nlcd_raster, online=online)
+        if s_nlcd.get("error") == "BLOCKED_FOR_NLCD_DOWNLOAD":
+            nlcd_blocked = True
+            print("-> BLOCKED", end="  ")
+        else:
+            print(f"-> {s_nlcd.get('class_code')}", end="  ")
 
         print("grid...", end=" ", flush=True)
-        g_nlcd = sample_nlcd_class(g_lat, g_lon, nlcd_raster)
-        print(f"-> {g_nlcd.get('class_code')} ({g_nlcd.get('class_label')})")
+        g_nlcd = sample_nlcd_class(g_lat, g_lon, raster_path=nlcd_raster, online=online)
+        if g_nlcd.get("error") == "BLOCKED_FOR_NLCD_DOWNLOAD":
+            print("-> BLOCKED")
+        else:
+            print(f"-> {g_nlcd.get('class_code')}")
 
         record = {
             "station_id": sid,
@@ -254,19 +215,32 @@ def run_extraction(
             "hrrr_grid_nlcd_2021_label": g_nlcd.get("class_label"),
             "hrrr_grid_nlcd_error": g_nlcd.get("error"),
             "proxy_risk_note": SXT_RISK_NOTE if sid == "SXT" else None,
-            "elevation_source_path": os.path.abspath(elevation_raster),
-            "nlcd_source_path": os.path.abspath(nlcd_raster),
+            "elevation_source_path": "ONLINE_USGS_EPQS" if online else os.path.abspath(elevation_raster) if elevation_raster else None,
+            "nlcd_source_path": "BLOCKED" if nlcd_blocked else os.path.abspath(nlcd_raster) if nlcd_raster else None,
             "raster_crs_elevation": s_elev.get("raster_crs"),
             "raster_crs_nlcd": s_nlcd.get("raster_crs"),
             "access_date": generated_at,
         }
         results.append(record)
 
+    # NLCD fallback printing
+    if nlcd_blocked:
+        print("\n" + "!" * 60)
+        print("WARNING: land_cover_status is BLOCKED_FOR_NLCD_DOWNLOAD")
+        print("NLCD 2021 point queries are unavailable or unreliable.")
+        print("To complete Phase 2E metadata, manually download the NLCD raster:")
+        print("  1. Go to https://www.mrlc.gov/viewer/")
+        print("  2. Draw box around Oregon (Lat 42-46.5, Lon -124.5 to -121)")
+        print("  3. Download NLCD 2021 Land Cover GeoTIFF")
+        print("  4. Re-run script using --nlcd-raster")
+        print("!" * 60)
+
     output = {
         "metadata_version": "1.0",
         "experiment_id": "EXP001",
         "stage": "Phase_2E",
         "generated_at": generated_at,
+        "land_cover_status": "BLOCKED_FOR_NLCD_DOWNLOAD" if nlcd_blocked else "COMPLETE",
         "caveats": [NLCD_STATIC_YEAR_CAVEAT],
         "stations": results,
     }
@@ -274,39 +248,19 @@ def run_extraction(
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2, ensure_ascii=False)
-    print(f"\nOutput written: {output_path}")
+    print(f"\nPartial output written: {output_path}" if nlcd_blocked else f"\nOutput written: {output_path}")
 
 
 # ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 def main() -> None:
-    parser = argparse.ArgumentParser(
-        description="MRDE EXP001 Phase 2E: Terrain and Land Cover Metadata"
-    )
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Validate inputs and print planned work. No rasters required.",
-    )
-    parser.add_argument(
-        "--elevation-raster",
-        type=str,
-        default=None,
-        help="Path to a local DEM GeoTIFF (SRTM or USGS 3DEP). Required for real run.",
-    )
-    parser.add_argument(
-        "--nlcd-raster",
-        type=str,
-        default=None,
-        help="Path to the local NLCD 2021 GeoTIFF. Required for real run.",
-    )
-    parser.add_argument(
-        "--output",
-        type=str,
-        default=DEFAULT_OUTPUT,
-        help=f"Output JSON path (default: {DEFAULT_OUTPUT})",
-    )
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--online", action="store_true", help="Use online point-query where possible")
+    parser.add_argument("--elevation-raster", type=str, default=None)
+    parser.add_argument("--nlcd-raster", type=str, default=None)
+    parser.add_argument("--output", type=str, default=DEFAULT_OUTPUT)
     args = parser.parse_args()
 
     print("=" * 60)
@@ -316,22 +270,19 @@ def main() -> None:
     stations = load_stations()
     hrrr_grids = load_hrrr_grids()
 
-    print(f"Loaded {len(stations)} stations, {len(hrrr_grids)} HRRR grid entries.")
-
     if args.dry_run:
         run_dry_run(stations, hrrr_grids)
         return
 
-    # Real run: both raster paths are required
-    if not args.elevation_raster or not args.nlcd_raster:
+    if not args.online and (not args.elevation_raster or not args.nlcd_raster):
         print(
-            "ERROR: Real extraction requires both --elevation-raster and --nlcd-raster.\n"
-            "Use --dry-run to validate without rasters.",
+            "ERROR: Real local extraction requires both --elevation-raster and --nlcd-raster.\n"
+            "Use --online for point-query mode.",
             file=sys.stderr,
         )
         sys.exit(2)
 
-    run_extraction(stations, hrrr_grids, args.elevation_raster, args.nlcd_raster, args.output)
+    run_extraction(stations, hrrr_grids, args.elevation_raster, args.nlcd_raster, args.online, args.output)
 
 
 if __name__ == "__main__":

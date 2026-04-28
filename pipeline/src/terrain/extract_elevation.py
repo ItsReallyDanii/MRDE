@@ -1,44 +1,95 @@
 """
-MRDE EXP001 — Phase 2E: Terrain Elevation Extraction
+MRDE EXP001 -- Phase 2E: Terrain Elevation Extraction
 Stage 2 Phase 2E
 
-Samples elevation (meters, AMSL) from a local GeoTIFF DEM (e.g. SRTM 1-arc-sec
-or USGS 3DEP) at one or more WGS84 lat/lon points using rasterio.
-
-Coordinate reprojection: WGS84 → raster native CRS performed automatically.
+Supports:
+1. Local Raster Mode: Samples elevation from a local DEM GeoTIFF.
+2. Online Point-Query Mode: Queries the official USGS 3DEP EPQS.
 
 FORBIDDEN: no downloads, no residuals, no ASOS alignment.
 """
 import os
+import urllib.request
+import urllib.error
+import json
 from typing import Union
 
-import numpy as np
+
+def query_elevation_online(lat: float, lon: float) -> dict:
+    """
+    Query the USGS 3DEP Elevation Point Query Service (EPQS).
+    """
+    url = f"https://epqs.nationalmap.gov/v1/json?x={lon}&y={lat}&units=Meters"
+    req = urllib.request.Request(url, headers={"User-Agent": "MRDE-Phase2E-Agent"})
+    
+    try:
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            data = json.loads(resp.read())
+            
+        # The EPQS returns a 'value' string, or empty/error if outside US.
+        if "value" in data and data["value"] is not None:
+            elev_val = float(data["value"])
+            # Nodata in EPQS is often returned as a very large negative or positive, 
+            # but usually it's just missing. Let's assume typical nodata > -20000
+            if elev_val < -20000:
+                is_nodata = True
+                elev_val = None
+            else:
+                is_nodata = False
+                elev_val = round(elev_val, 2)
+            
+            return {
+                "elevation_m": elev_val,
+                "nodata": is_nodata,
+                "error": "nodata from service" if is_nodata else None,
+                "raster_crs": "EPSG:4326 (EPQS)",
+                "input_lat": lat,
+                "input_lon": lon,
+            }
+        else:
+            return {
+                "elevation_m": None,
+                "nodata": True,
+                "error": "EPQS returned no value",
+                "raster_crs": "EPSG:4326",
+                "input_lat": lat,
+                "input_lon": lon,
+            }
+            
+    except Exception as exc:
+        return {
+            "elevation_m": None,
+            "nodata": False,
+            "error": f"EPQS query error: {exc}",
+            "raster_crs": None,
+            "input_lat": lat,
+            "input_lon": lon,
+        }
 
 
 def sample_elevation(
     lat: float,
     lon: float,
-    raster_path: str,
+    raster_path: str = None,
+    online: bool = False,
 ) -> dict:
     """
-    Sample elevation at a single WGS84 point from a local DEM GeoTIFF.
-
-    Parameters
-    ----------
-    lat : float       WGS84 latitude (decimal degrees, positive = north)
-    lon : float       WGS84 longitude (decimal degrees, negative = west)
-    raster_path : str Absolute or relative path to the local DEM GeoTIFF.
-
-    Returns
-    -------
-    dict with keys:
-        elevation_m    : float | None  — sampled elevation in metres
-        nodata         : bool          — True if the pixel is nodata
-        error          : str | None    — error message if sampling failed
-        raster_crs     : str           — EPSG string of the raster CRS
-        input_lat      : float
-        input_lon      : float
+    Sample elevation at a single WGS84 point.
+    Dispatches to online API or local raster.
     """
+    if online:
+        return query_elevation_online(lat, lon)
+        
+    if not raster_path:
+        return {
+            "elevation_m": None,
+            "nodata": False,
+            "error": "Neither online=True nor raster_path provided.",
+            "raster_crs": None,
+            "input_lat": lat,
+            "input_lon": lon,
+        }
+
     try:
         import rasterio
         from rasterio.crs import CRS
@@ -59,9 +110,7 @@ def sample_elevation(
             "nodata": False,
             "error": (
                 f"Elevation raster not found: {raster_path}\n"
-                "Download a DEM (e.g. SRTM 1-arc-sec from https://earthexplorer.usgs.gov/ "
-                "or USGS 3DEP via https://apps.nationalmap.gov/downloader/) "
-                "and supply its path with --elevation-raster."
+                "Provide a local raster path or use --online."
             ),
             "raster_crs": None,
             "input_lat": lat,
@@ -73,7 +122,7 @@ def sample_elevation(
             raster_crs = src.crs.to_string()
             nodata_val = src.nodata
 
-            # Reproject WGS84 → raster CRS if needed
+            # Reproject WGS84 -> raster CRS if needed
             wgs84 = CRS.from_epsg(4326)
             if src.crs.to_epsg() != 4326:
                 transformer = Transformer.from_crs(wgs84, src.crs, always_xy=True)
@@ -83,7 +132,6 @@ def sample_elevation(
 
             # Sample at the transformed point
             row, col = src.index(x, y)
-            # Bounds check
             if row < 0 or row >= src.height or col < 0 or col >= src.width:
                 return {
                     "elevation_m": None,
@@ -121,18 +169,3 @@ def sample_elevation(
             "input_lat": lat,
             "input_lon": lon,
         }
-
-
-def sample_elevations_batch(
-    points: list[dict],
-    raster_path: str,
-) -> list[dict]:
-    """
-    Sample elevation for a list of {'label': str, 'lat': float, 'lon': float} dicts.
-    Returns the input dicts extended with elevation result fields.
-    """
-    results = []
-    for pt in points:
-        result = sample_elevation(pt["lat"], pt["lon"], raster_path)
-        results.append({**pt, **result})
-    return results
