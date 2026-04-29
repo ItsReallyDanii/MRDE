@@ -20,7 +20,10 @@ MRDE is a public-data-only, validation-first research framework for detecting, t
 
 - **Residual Preinspection Guard**: No residual analysis or data inspection is allowed before a completed, human-approved, append-only logged pre-run experiment plan exists.
 - **Diff-Review Gates**: Unauthorized or out-of-scope file changes (e.g., modifying pipeline code or schemas without explicit instructions) must be flagged before any merge.
-- **Claim-Language Guard**: Overclaiming must be downgraded to `AMBIGUOUS` unless strictly supported by pre-registered validation. Do not mark any result as `SUPPORTED`, `VALIDATED`, `PROVEN`, or `DISCOVERED` under any circumstance.
+- **Claim-Language Guard**: Overclaiming must be downgraded to `AMBIGUOUS` unless strictly supported by pre-registered validation. Agents must not independently mark any result as `SUPPORTED`, `VALIDATED`, `PROVEN`, or `DISCOVERED`. Claim-tier upgrades require explicit human approval and the applicable pre-registered validation evidence.
+
+## Claim Terms Policy Exception
+Policy/control documents may mention restricted claim terms when defining governance rules. Agent-generated result summaries, PR descriptions, reports, and scientific interpretations must not use those terms unless explicitly authorized.
 - **Allowed Actions**: Write code, run tests, summarize logs, prepare PRs.
 - **Disallowed Actions**: Decide scientific truth, execute claim-tier upgrades, change locked scientific rules, present exploratory patterns as confirmed findings.
 

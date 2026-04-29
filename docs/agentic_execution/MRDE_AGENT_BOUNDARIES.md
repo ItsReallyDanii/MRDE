@@ -27,7 +27,7 @@ This document defines the strict authority boundaries among all actors operating
 - **Strict Boundaries:**
   - Cannot read residual data without a logged pre-run plan.
   - Cannot evaluate scientific truth.
-  - Cannot independently upgrade claim tiers.
+  - Agents must not independently mark any result as `SUPPORTED`, `VALIDATED`, `PROVEN`, or `DISCOVERED`. Claim-tier upgrades require explicit human approval and the applicable pre-registered validation evidence.
   - Cannot modify out-of-scope files (enforced by Diff Scope Gate).
 
 ## 4. Repository Docs (The Law)
@@ -36,3 +36,6 @@ This document defines the strict authority boundaries among all actors operating
   - Host the inviolable source of truth for MRDE rules (e.g., `01_MASTER_COMPLETION_CONTRACT.md`, `AGENTS.md`).
   - Provide the structural definition for what constitutes a valid discovery, test, or log.
   - Agents must constantly read and defer to these docs before acting.
+
+## 5. Claim Terms Policy Exception
+Policy/control documents may mention restricted claim terms when defining governance rules. Agent-generated result summaries, PR descriptions, reports, and scientific interpretations must not use those terms unless explicitly authorized.

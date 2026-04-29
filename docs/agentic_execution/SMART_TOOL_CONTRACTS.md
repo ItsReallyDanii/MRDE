@@ -40,4 +40,8 @@ This document outlines proposed programmatic wrappers ("Smart Tools") designed t
 **Contract:**
 - Scans all agent-generated text (PR descriptions, documentation, log summaries) for prohibited words (`SUPPORTED`, `VALIDATED`, `PROVEN`, `DISCOVERED`).
 - Automatically downgrades offending terms to `AMBIGUOUS` or requires the agent to rewrite the text.
+- Agents must not independently mark any result as `SUPPORTED`, `VALIDATED`, `PROVEN`, or `DISCOVERED`. Claim-tier upgrades require explicit human approval and the applicable pre-registered validation evidence.
 - Overclaiming is strictly rejected.
+
+## 7. Claim Terms Policy Exception
+Policy/control documents may mention restricted claim terms when defining governance rules. Agent-generated result summaries, PR descriptions, reports, and scientific interpretations must not use those terms unless explicitly authorized.

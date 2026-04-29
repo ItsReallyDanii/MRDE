@@ -18,10 +18,14 @@ Jules is bound by strict research-control boundaries. Jules **must not** be used
 
 - **Residual Preinspection:** Jules must never inspect, summarize, or access residual data unless a human-approved, append-only logged pre-run experiment plan is explicitly confirmed to exist.
 - **Scientific Authority:** Jules cannot decide scientific truth, modify experiment hypotheses, or define valid patterns.
-- **Claim Upgrades:** Jules is not authorized to execute claim-tier upgrades. Do not use Jules to mark any result as `SUPPORTED`, `VALIDATED`, `PROVEN`, or `DISCOVERED`. Any such language generated must be automatically downgraded to `AMBIGUOUS`.
+- **Claim Upgrades:** Jules is not authorized to execute claim-tier upgrades. Agents must not independently mark any result as `SUPPORTED`, `VALIDATED`, `PROVEN`, or `DISCOVERED`. Claim-tier upgrades require explicit human approval and the applicable pre-registered validation evidence. Any such language generated without approval must be automatically downgraded to `AMBIGUOUS`.
 - **Unauthorized Schema Changes:** Jules must not modify data files or schema contracts without explicit approval and an active task plan.
 
-## 3. Guiding Principles for Agent Interaction
+## 3. Claim Terms Policy Exception
+
+Policy/control documents may mention restricted claim terms when defining governance rules. Agent-generated result summaries, PR descriptions, reports, and scientific interpretations must not use those terms unless explicitly authorized.
+
+## 4. Guiding Principles for Agent Interaction
 
 - Treat Jules as an executor, not an arbiter.
 - Every run involving Jules must have a clear scope and a pre-defined expected outcome.
